@@ -1,5 +1,7 @@
 # FocusBrew
 
+<img src="public/icon.svg" alt="FocusBrew icon" width="96" height="96" />
+
 A cozy, pixel‑art focus timer built with React + Vite.
 
 ## Main functionality
