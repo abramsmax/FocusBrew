@@ -1,0 +1,460 @@
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.timer-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.timer-subtitle {
+  color: var(--autumn-brown);
+  font-size: 8px;
+  margin-top: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.timer-display {
+  background-color: var(--autumn-dark-brown);
+  color: var(--autumn-cream);
+  padding: 24px;
+  border: 4px solid var(--autumn-dark-brown);
+  margin-bottom: 24px;
+  position: relative;
+  box-shadow: 
+    4px 4px 0px var(--autumn-brown),
+    8px 8px 0px var(--autumn-beige);
+}
+
+.timer-display::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid var(--autumn-beige);
+  pointer-events: none;
+}
+
+.time-value {
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: none;
+  line-height: 1.2;
+}
+
+.timer-inputs {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-group label {
+  font-weight: 400;
+  font-size: 8px;
+  color: var(--autumn-dark-brown);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Center the number in the minutes input */
+.input-group input[type="number"] {
+  text-align: center;            /* center the number */
+  padding-right: 28px;           /* balanced padding for centering */
+  padding-left: 28px;            /* balanced padding for centering */
+  width: 120px !important;       /* narrower input as requested */
+  box-sizing: border-box;
+}
+
+/* Move the spinner a bit to the right on WebKit (Chrome/Safari) */
+.input-group input[type="number"]::-webkit-inner-spin-button,
+.input-group input[type="number"]::-webkit-outer-spin-button {
+  transform: translateX(10px);
+}
+
+.timer-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px; /* slightly bigger gap above the cup */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.timer-controls button {
+  min-width: 120px;
+  height: 48px;
+}
+
+/* Start button uses global button styles to match Shelf button hover exactly */
+
+.pause-btn {
+  background-color: var(--autumn-burnt-orange) !important;
+}
+
+.reset-btn {
+  background-color: var(--autumn-brown) !important;
+}
+
+.shelf-btn {
+  margin-top: 16px; /* ensure no overlap with cup/glow */
+  min-width: 160px;
+  height: 40px;
+}
+
+/* When BREWING... is hidden, give extra space before the button to avoid overlap */
+.cup-container:not(:has(.brew-status)) .shelf-btn {
+  margin-top: 24px;
+}
+
+.brew-status {
+  margin-top: 0;
+  font-size: 8px;
+  color: var(--autumn-brown);
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  position: relative;
+  z-index: 4;
+}
+
+/* Grid-based Pixel Art Coffee Cup */
+.cup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px; /* tile-sized gap to clear cup base & glow */
+  margin-top: 0; /* avoid overlapping the controls above */
+}
+
+.coffee-cup {
+  position: relative;
+  width: 320px;
+  height: 160px; /* exact tight fit: 80px above and below center */
+  margin: 0;
+  display: flex;
+  align-items: center; /* center anchor; reduced height brings text closer */
+  justify-content: center;
+}
+
+/* New: Inner clipping area matching the cup interior */
+.cup-inner {
+  position: absolute;
+  /* Center the 16px anchor and scale using box-shadow grid units (16px) */
+  left: 50%;
+  top: calc(50% + 24px); /* interior center is 24px below anchor */
+  width: 80px;  /* 5 tiles (x = -32..+32) */
+  height: 96px; /* 6 tiles (y = -16..+64) */
+  transform: translate(-50%, -50%);
+  overflow: hidden; /* critical: clip the liquid */
+  z-index: 1; /* below the outline */
+  pointer-events: none;
+}
+
+/* Pixel art cup using CSS box-shadow to create individual pixels */
+.cup-outline {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  z-index: 2; /* keep outline above the liquid */
+  
+  /* Create the pixel art cup using box-shadow - each shadow is a 16x16 pixel */
+  box-shadow:
+    /* Steam pixels (cozy yellow/orange) */
+    -32px -80px 0 0 #FFB84D,
+    0px -80px 0 0 #FFB84D,
+    32px -80px 0 0 #FFB84D,
+    -16px -64px 0 0 #FFA500,
+    16px -64px 0 0 #FFA500,
+    -32px -48px 0 0 #FF8C00,
+    0px -48px 0 0 #FF8C00,
+    32px -48px 0 0 #FF8C00,
+    
+    /* Cup rim (cozy cream/beige) */
+    -48px -32px 0 0 var(--autumn-dark-brown),
+    -32px -32px 0 0 var(--autumn-dark-brown),
+    -16px -32px 0 0 var(--autumn-dark-brown),
+    0px -32px 0 0 var(--autumn-dark-brown),
+    16px -32px 0 0 var(--autumn-dark-brown),
+    32px -32px 0 0 var(--autumn-dark-brown),
+    48px -32px 0 0 var(--autumn-dark-brown),
+    
+    /* Cup walls (cozy beige) */
+    -48px -16px 0 0 var(--autumn-dark-brown),
+  -32px -16px 0 0 transparent,
+  -16px -16px 0 0 transparent,
+  0px -16px 0 0 transparent,
+  16px -16px 0 0 transparent,
+  32px -16px 0 0 transparent,
+    48px -16px 0 0 var(--autumn-dark-brown),
+    
+    -48px 0px 0 0 var(--autumn-dark-brown),
+  -32px 0px 0 0 transparent,
+  -16px 0px 0 0 transparent,
+  0px 0px 0 0 transparent,
+  16px 0px 0 0 transparent,
+  32px 0px 0 0 transparent,
+    48px 0px 0 0 var(--autumn-dark-brown),
+    
+    -48px 16px 0 0 var(--autumn-dark-brown),
+  -32px 16px 0 0 transparent,
+  -16px 16px 0 0 transparent,
+  0px 16px 0 0 transparent,
+  16px 16px 0 0 transparent,
+  32px 16px 0 0 transparent,
+    48px 16px 0 0 var(--autumn-dark-brown),
+    
+    -48px 32px 0 0 var(--autumn-dark-brown),
+  -32px 32px 0 0 transparent,
+  -16px 32px 0 0 transparent,
+  0px 32px 0 0 transparent,
+  16px 32px 0 0 transparent,
+  32px 32px 0 0 transparent,
+    48px 32px 0 0 var(--autumn-dark-brown),
+    
+    -48px 48px 0 0 var(--autumn-dark-brown),
+  -32px 48px 0 0 transparent,
+  -16px 48px 0 0 transparent,
+  0px 48px 0 0 transparent,
+  16px 48px 0 0 transparent,
+  32px 48px 0 0 transparent,
+    48px 48px 0 0 var(--autumn-dark-brown),
+    
+    -48px 64px 0 0 var(--autumn-dark-brown),
+  -32px 64px 0 0 transparent,
+  -16px 64px 0 0 transparent,
+  0px 64px 0 0 transparent,
+  16px 64px 0 0 transparent,
+  32px 64px 0 0 transparent,
+    48px 64px 0 0 var(--autumn-dark-brown),
+    
+    /* Cup bottom */
+    -48px 80px 0 0 var(--autumn-dark-brown),
+    -32px 80px 0 0 var(--autumn-dark-brown),
+    -16px 80px 0 0 var(--autumn-dark-brown),
+    0px 80px 0 0 var(--autumn-dark-brown),
+    16px 80px 0 0 var(--autumn-dark-brown),
+    32px 80px 0 0 var(--autumn-dark-brown),
+    48px 80px 0 0 var(--autumn-dark-brown),
+    
+    /* Cup handle (cozy brown) */
+  64px -16px 0 0 var(--autumn-dark-brown),
+  80px -16px 0 0 var(--autumn-dark-brown),
+  64px 0px 0 0 transparent,
+  80px 0px 0 0 var(--autumn-dark-brown),
+  64px 16px 0 0 transparent,
+  80px 16px 0 0 var(--autumn-dark-brown),
+  64px 32px 0 0 transparent,
+  80px 32px 0 0 var(--autumn-dark-brown),
+  64px 48px 0 0 var(--autumn-dark-brown),
+  80px 48px 0 0 var(--autumn-dark-brown);
+}
+
+/* Coffee liquid - dark brown that fills up */
+.cup-liquid {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(to top,
+    #1A0E0A 0%,
+    #2D1810 20%,
+    #3F2318 40%,
+    #4A2B1D 60%,
+    #553120 80%,
+    #5E3624 100%
+  );
+  transition: height 0.5s ease-out;
+}
+
+/* Dynamic coffee filling using CSS custom properties */
+.cup-liquid.fill-20 {
+  box-shadow:
+    -16px 64px 0 0 var(--autumn-deep-orange),
+    0px 64px 0 0 var(--autumn-deep-orange),
+    16px 64px 0 0 var(--autumn-deep-orange);
+}
+
+.cup-liquid.fill-40 {
+  box-shadow:
+    -16px 48px 0 0 var(--autumn-deep-orange),
+    0px 48px 0 0 var(--autumn-deep-orange),
+    16px 48px 0 0 var(--autumn-deep-orange),
+    -16px 64px 0 0 var(--autumn-deep-orange),
+    0px 64px 0 0 var(--autumn-deep-orange),
+    16px 64px 0 0 var(--autumn-deep-orange);
+}
+
+.cup-liquid.fill-60 {
+  box-shadow:
+    -16px 32px 0 0 var(--autumn-deep-orange),
+    0px 32px 0 0 var(--autumn-deep-orange),
+    16px 32px 0 0 var(--autumn-deep-orange),
+    -16px 48px 0 0 var(--autumn-deep-orange),
+    0px 48px 0 0 var(--autumn-deep-orange),
+    16px 48px 0 0 var(--autumn-deep-orange),
+    -16px 64px 0 0 var(--autumn-deep-orange),
+    0px 64px 0 0 var(--autumn-deep-orange),
+    16px 64px 0 0 var(--autumn-deep-orange);
+}
+
+.cup-liquid.fill-80 {
+  box-shadow:
+    -16px 16px 0 0 var(--autumn-deep-orange),
+    0px 16px 0 0 var(--autumn-deep-orange),
+    16px 16px 0 0 var(--autumn-deep-orange),
+    -16px 32px 0 0 var(--autumn-deep-orange),
+    0px 32px 0 0 var(--autumn-deep-orange),
+    16px 32px 0 0 var(--autumn-deep-orange),
+    -16px 48px 0 0 var(--autumn-deep-orange),
+    0px 48px 0 0 var(--autumn-deep-orange),
+    16px 48px 0 0 var(--autumn-deep-orange),
+    -16px 64px 0 0 var(--autumn-deep-orange),
+    0px 64px 0 0 var(--autumn-deep-orange),
+    16px 64px 0 0 var(--autumn-deep-orange);
+}
+
+.cup-liquid.fill-100 {
+  box-shadow:
+    -16px 0px 0 0 var(--autumn-deep-orange),
+    0px 0px 0 0 var(--autumn-deep-orange),
+    16px 0px 0 0 var(--autumn-deep-orange),
+    -16px 16px 0 0 var(--autumn-deep-orange),
+    0px 16px 0 0 var(--autumn-deep-orange),
+    16px 16px 0 0 var(--autumn-deep-orange),
+    -16px 32px 0 0 var(--autumn-deep-orange),
+    0px 32px 0 0 var(--autumn-deep-orange),
+    16px 32px 0 0 var(--autumn-deep-orange),
+    -16px 48px 0 0 var(--autumn-deep-orange),
+    0px 48px 0 0 var(--autumn-deep-orange),
+    16px 48px 0 0 var(--autumn-deep-orange),
+    -16px 64px 0 0 var(--autumn-deep-orange),
+    0px 64px 0 0 var(--autumn-deep-orange),
+    16px 64px 0 0 var(--autumn-deep-orange);
+}
+
+/* Animated steam */
+.steam {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  z-index: 3;
+}
+
+.steam-line {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  animation: steam-rise 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+.steam-1 {
+  background: transparent;
+  box-shadow: -32px -80px 0 0 #FFB84D;
+  animation-delay: 0s;
+  opacity: 0.8;
+}
+
+.steam-2 {
+  background: transparent;
+  box-shadow: 0px -64px 0 0 #FFA500;
+  animation-delay: 0.5s;
+  opacity: 0.7;
+}
+
+.steam-3 {
+  background: transparent;
+  box-shadow: 32px -48px 0 0 #FF8C00;
+  animation-delay: 1s;
+  opacity: 0.6;
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+/* .progress-text removed */
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .timer-container {
+    padding: 8px;
+  }
+  .cup-container {
+  margin-top: 0; /* prevent overlap on small screens */
+  }
+  
+  .time-value {
+    font-size: 24px;
+  }
+  
+  .coffee-cup {
+    width: 232px;
+  height: 160px; /* match desktop tight height */
+  }
+  
+  .steam {
+    transform: scale(0.8) translate(-50%, -50%);
+  }
+  .cup-inner {
+  /* Use the same geometry as desktop to keep liquid aligned with outline */
+  left: 50%;
+  top: calc(50% + 24px);
+  width: 80px;
+  height: 96px;
+  transform: translate(-50%, -50%);
+  }
+}
+
+/* Completion Animation */
+@keyframes cup-complete {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.coffee-cup.complete {
+  animation: cup-complete 0.6s ease-in-out;
+}
+
+/* Active state glow */
+.coffee-cup.active .cup-outline {
+  filter: drop-shadow(0 0 8px rgba(255, 184, 77, 0.4));
+}

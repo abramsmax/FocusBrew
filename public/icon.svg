@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="coffee" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#1A0E0A"/>
+      <stop offset="100%" stop-color="#5E3624"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="24" ry="24" fill="#f3e6d1"/>
+  <!-- steam -->
+  <g opacity="0.9">
+    <rect x="38" y="22" width="12" height="12" fill="#FFB84D"/>
+    <rect x="58" y="22" width="12" height="12" fill="#FFA500"/>
+    <rect x="78" y="22" width="12" height="12" fill="#FFB84D"/>
+    <rect x="48" y="34" width="12" height="12" fill="#FF8C00"/>
+    <rect x="68" y="34" width="12" height="12" fill="#FFA500"/>
+  </g>
+  <!-- cup outline -->
+  <rect x="36" y="46" width="56" height="48" fill="#8a6a21"/>
+  <rect x="92" y="56" width="20" height="28" fill="#8a6a21"/>
+  <!-- handle middle pixel cutout for D-shape -->
+  <rect x="92" y="64" width="12" height="12" fill="#f3e6d1"/>
+  <!-- cup hollow -->
+  <rect x="44" y="54" width="40" height="32" fill="#f3e6d1"/>
+  <!-- coffee liquid -->
+  <rect x="44" y="78" width="40" height="8" fill="url(#coffee)"/>
+</svg>
